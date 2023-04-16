@@ -1,0 +1,5 @@
+name: single-module-project
+title: Single module project
+version: latest
+nav:
+  - modules/ROOT/nav.adoc

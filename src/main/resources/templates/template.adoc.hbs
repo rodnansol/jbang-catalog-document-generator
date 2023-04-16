@@ -7,6 +7,7 @@
 {{/each~}}
 {{/if~}}
 
+
 {{#if aliases~}}
 == Aliases
 {{#each aliases}}
@@ -35,7 +36,7 @@ jbang {{@key}}{{#if this.arguments}} -- {{this.arguments}}{{/if}}{{#if this.java
 {{/if~}}
 [source, bash]
 ----
-jbang init -t={{@key}} `-Dproperty=value scriptOrFile`
+jbang init -t={{@key}} -Dproperty=value scriptOrFile
 ----
 {{#if this.properties~}}
 

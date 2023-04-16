@@ -1,5 +1,13 @@
 #!/usr/bin/env just --justfile
 
+#!/usr/bin/env just --justfile
+
+set export
+
+home_dir  := env_var('HOME')
+JAVA_HOME := home_dir + "/.sdkman/candidates/java/22.3.r17-grl"
+MAVEN_HOME := home_dir + "/.sdkman/candidates/maven/3.9.0"
+
 # Maven build without tests
 build:
    mvn -DskipTests clean install
@@ -11,6 +19,13 @@ verify:
 # Build samples
 build-samples: build
   cd samples && mvn clean install
+
+cleanup:
+  rm -rf ~/.m2/repository/org/rodnansol/jbang-catalog-document-generator-{core,cli}
+
+clean-build: cleanup
+  ./mvnw clean install
+  ./mvnw package -Puber-jar -f jbang-catalog-document-generator-cli/pom.xml
 
 # Debug samples
 debug-samples: build
@@ -26,11 +41,12 @@ dry-release:
   mvn jreleaser:full-release -Prelease -Djreleaser.dry.run
 
 # Snapshot release
-snapshot-release version:
-  mvn versions:set -DnewVersion={{version}}
-  mvn clean -Prelease deploy -DaltDeploymentRepository=local::file:./target/staging-deploy
-  mvn jreleaser:full-release -Prelease -N
-  mvn versions:set -DnewVersion=999-SNAPSHOT
+snapshot-release version: cleanup
+  ./mvnw versions:set -DnewVersion={{version}}
+  ./mvnw clean
+  ./mvnw -Prelease,uber-jar deploy -DaltDeploymentRepository=local::file:./target/staging-deploy
+  ./scripts/jbang-version-release.sh {{version}}
+  ./mvnw jreleaser:release -Prelease -N -Djreleaser-nexus-deploy.active=SNAPSHOT -Djreleaser-github-release.pre-release=true
 
 # Draft release
 draft-release version: (create-jbang-release version)
@@ -58,3 +74,15 @@ dry-release-config:
 # Creates a JBang "release"
 create-jbang-release version:
   ./scripts/jbang-version-release.sh {{version}}
+
+# Runs with AsciiDoc output
+help-example:
+  java -jar jbang-catalog-document-generator-cli/target/jbang-catalog-document-generator-cli-999-SNAPSHOT.jar generate
+
+# Runs with AsciiDoc output
+adoc-example:
+  java -jar jbang-catalog-document-generator-cli/target/jbang-catalog-document-generator-cli-999-SNAPSHOT.jar generate docs/modules/ROOT/examples/jbang-catalog.json -ch examples/custom-header.adoc -cf examples/custom-footer.adoc -o target/jbang-catalog.adoc --check-checksum=false -hfdr
+
+# Runs with Markdown output
+md-example:
+  java -jar jbang-catalog-document-generator-cli/target/jbang-catalog-document-generator-cli-999-SNAPSHOT.jar generate -tt MD docs/modules/ROOT/examples/jbang-catalog.json -ch examples/custom-header.md -cf examples/custom-footer.md -o target/jbang-catalog.md --check-checksum=false

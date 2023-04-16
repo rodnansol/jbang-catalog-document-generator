@@ -1,7 +1,7 @@
 site:
   title: Rodnan Sol
   url: http://rodnansol.org
-  start_page: single-module-project::index.adoc
+  start_page: jbang-catalog-document-generator::index.adoc
 content:
   sources:
     - url: ./

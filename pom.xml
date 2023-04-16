@@ -5,28 +5,39 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.rodnansol</groupId>
-    <artifactId>single-module-project</artifactId>
+    <artifactId>jbang-catalog-document-generator</artifactId>
     <version>999-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>jbang-catalog-document-generator-core</module>
+        <module>jbang-catalog-document-generator-cli</module>
+    </modules>
 
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <compiler-plugin.version>3.11.0</compiler-plugin.version>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.release>17</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
+        <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
+        <quarkus.platform.version>3.0.0.CR2</quarkus.platform.version>
         <project.copyright>Apache-2.0</project.copyright>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven-compiler-plugin.version>3.10.1</maven-compiler-plugin.version>
         <maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
         <logback-classic.version>1.2.11</logback-classic.version>
         <slf4j-api.version>1.7.33</slf4j-api.version>
         <junit-bom.version>5.9.0</junit-bom.version>
-        <maven-surefire-plugin.version>3.0.0-M8</maven-surefire-plugin.version>
-        <maven-failsafe-plugin.version>3.0.0-M8</maven-failsafe-plugin.version>
+        <maven-surefire-plugin.version>3.0.0</maven-surefire-plugin.version>
+        <maven-failsafe-plugin.version>3.0.0</maven-failsafe-plugin.version>
         <mockito-core.version>4.6.1</mockito-core.version>
         <mockito-junit-jupiter.version>4.6.1</mockito-junit-jupiter.version>
         <hamcrest-all.version>1.3</hamcrest-all.version>
         <junit-jupiter-params.version>5.8.1</junit-jupiter-params.version>
         <editorconfig-maven-plugin.version>0.1.1</editorconfig-maven-plugin.version>
-        <jreleaser-maven-plugin.version>1.4.0</jreleaser-maven-plugin.version>
+        <jreleaser-maven-plugin.version>1.5.1</jreleaser-maven-plugin.version>
         <git-build-hook-maven-plugin.version>3.3.0</git-build-hook-maven-plugin.version>
         <maven-release-plugin.version>3.0.0-M6</maven-release-plugin.version>
         <maven-checkstyle-plugin.version>3.2.0</maven-checkstyle-plugin.version>
@@ -40,13 +51,15 @@
         <maven-deploy-plugin.version>3.0.0</maven-deploy-plugin.version>
         <maven-javadoc-plugin.version>3.4.1</maven-javadoc-plugin.version>
         <maven-resources-plugin.version>3.3.0</maven-resources-plugin.version>
+        <handlebars.version>4.3.0</handlebars.version>
         <jreleaser-github-release.draft>false</jreleaser-github-release.draft>
         <jreleaser-nexus-deploy.active>ALWAYS</jreleaser-nexus-deploy.active>
+        <jandex-maven-plugin.version>3.0.5</jandex-maven-plugin.version>
     </properties>
 
-    <name>Single Module Project</name>
-    <description>Single Module Project Description</description>
-    <url>https://github.com/rodnansol/single-module-project</url>
+    <name>JBang Catalog Document Generator</name>
+    <description>JBang Catalog Document Generator creates documentation in different formats based on the jbang-catalog.json file.</description>
+    <url>https://github.com/rodnansol/jbang-catalog-document-generator</url>
     <inceptionYear>2023</inceptionYear>
     <developers>
         <developer>
@@ -69,12 +82,19 @@
     <scm>
         <connection>scm:git:git@${project.scm.url}</connection>
         <developerConnection>scm:git:${project.scm.url}</developerConnection>
-        <url>git@github.com:rodnansol/single-module-project.git</url>
+        <url>git@github.com:rodnansol/jbang-catalog-document-generator.git</url>
         <tag>HEAD</tag>
     </scm>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>${quarkus.platform.group-id}</groupId>
+                <artifactId>${quarkus.platform.artifact-id}</artifactId>
+                <version>${quarkus.platform.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
             <dependency>
                 <groupId>org.junit</groupId>
                 <artifactId>junit-bom</artifactId>
@@ -82,53 +102,28 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.rodnansol</groupId>
+                <artifactId>jbang-catalog-document-generator-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.rodnansol</groupId>
+                <artifactId>jbang-catalog-document-generator-cli</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.jknack</groupId>
+                <artifactId>handlebars</artifactId>
+                <version>${handlebars.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>${assertj-core.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <dependencies>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${logback-classic.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${slf4j-api.version}</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
-            <version>${assertj-core.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>${mockito-core.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-junit-jupiter</artifactId>
-            <version>${mockito-junit-jupiter.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-all</artifactId>
-            <version>${hamcrest-all.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter-params</artifactId>
-            <version>${junit-jupiter-params.version}</version>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
 
     <build>
         <pluginManagement>
@@ -143,7 +138,6 @@
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>${maven-failsafe-plugin.version}</version>
                 </plugin>
-
                 <plugin>
                     <groupId>com.rudikershaw.gitbuildhook</groupId>
                     <artifactId>git-build-hook-maven-plugin</artifactId>
@@ -179,6 +173,34 @@
                     <artifactId>maven-project-info-reports-plugin</artifactId>
                     <version>${maven-project-info-reports-plugin.version}</version>
                 </plugin>
+                <plugin>
+                    <groupId>io.smallrye</groupId>
+                    <artifactId>jandex-maven-plugin</artifactId>
+                    <version>${jandex-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>make-index</id>
+                            <goals>
+                                <goal>jandex</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>${quarkus.platform.group-id}</groupId>
+                    <artifactId>quarkus-maven-plugin</artifactId>
+                    <version>${quarkus.platform.version}</version>
+                    <extensions>true</extensions>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>build</goal>
+                                <goal>generate-code</goal>
+                                <goal>generate-code-tests</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
 
@@ -189,9 +211,52 @@
                 <version>${maven-deploy-plugin.version}</version>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
+                <groupId>io.smallrye</groupId>
+                <artifactId>jandex-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>${quarkus.platform.group-id}</groupId>
+                <artifactId>quarkus-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>${maven-compiler-plugin.version}</version>
+                <version>${compiler-plugin.version}</version>
+                <configuration>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <systemPropertyVariables>
+                        <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+                        <maven.home>${maven.home}</maven.home>
+                        <jacoco-agent.destfile>**/jacoco.exec</jacoco-agent.destfile>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${maven-failsafe-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                        <configuration>
+                            <systemPropertyVariables>
+                                <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
+                                <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
+                                <maven.home>${maven.home}</maven.home>
+                                <jacoco-agent.destfile>**/jacoco.exec</jacoco-agent.destfile>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -224,21 +289,13 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${maven-surefire-plugin.version}</version>
-                <configuration>
-                    <systemPropertyVariables>
-                        <jacoco-agent.destfile>**/jacoco.exec</jacoco-agent.destfile>
-                    </systemPropertyVariables>
-                </configuration>
-            </plugin>
-            <plugin>
+                <inherited>false</inherited>
                 <groupId>com.rudikershaw.gitbuildhook</groupId>
                 <artifactId>git-build-hook-maven-plugin</artifactId>
                 <configuration>
                     <installHooks>
                         <commit-msg>hooks/commit-msg</commit-msg>
+                        <pre-commit>hooks/pre-commit</pre-commit>
                     </installHooks>
                 </configuration>
                 <executions>
@@ -283,10 +340,22 @@
 
     <profiles>
         <profile>
+            <id>native</id>
+            <activation>
+                <property>
+                    <name>native</name>
+                </property>
+            </activation>
+            <properties>
+                <skipITs>false</skipITs>
+                <quarkus.package.type>native</quarkus.package.type>
+            </properties>
+        </profile>
+        <profile>
             <id>release</id>
             <properties>
                 <ossrh.url>https://s01.oss.sonatype.org</ossrh.url>
-                <release.tags>#tags</release.tags>
+                <release.tags>#jbang #java</release.tags>
                 <jreleaser-github-release.draft>false</jreleaser-github-release.draft>
                 <jreleaser-github-release.pre-release>false</jreleaser-github-release.pre-release>
                 <jreleaser-nexus-deploy.active>ALWAYS</jreleaser-nexus-deploy.active>
@@ -319,7 +388,7 @@
                                         <active>ALWAYS</active>
                                         <connectTimeout>20</connectTimeout>
                                         <readTimeout>60</readTimeout>
-                                        <status>🚀 Project Name {{projectVersion}} has been released! {{releaseNotesUrl}} ${release.tags}</status>
+                                        <status>🚀 JBang Catalog Document Generator {{projectVersion}} has been released! {{releaseNotesUrl}} ${release.tags}</status>
                                     </twitter>
                                 </announce>
                                 <release>
@@ -358,6 +427,33 @@
                                         </nexus2>
                                     </maven>
                                 </deploy>
+                                <distributions>
+                                    <singleCliJar>
+                                        <type>SINGLE_JAR</type>
+                                        <stereotype>CLI</stereotype>
+                                        <artifacts>
+                                            <artifact>
+                                                <path>jbang-catalog-document-generator-cli/target/jbang-catalog-document-generator-cli-${project.version}.jar</path>
+                                            </artifact>
+                                        </artifacts>
+                                        <tags>
+                                            <tag>cli</tag>
+                                        </tags>
+                                    </singleCliJar>
+                                    <jbangCli>
+                                        <type>JAVA_BINARY</type>
+                                        <stereotype>CLI</stereotype>
+                                        <artifacts>
+                                            <artifact>
+                                                <path>jbang/${project.version}/JbangCatalogDocumenter.java</path>
+                                            </artifact>
+                                        </artifacts>
+                                        <tags>
+                                            <tag>cli</tag>
+                                            <tag>jbang</tag>
+                                        </tags>
+                                    </jbangCli>
+                                </distributions>
                             </jreleaser>
                             <projectCopyright>Apache-2.0</projectCopyright>
                         </configuration>

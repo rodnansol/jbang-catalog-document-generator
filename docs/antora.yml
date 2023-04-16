@@ -1,5 +1,5 @@
-name: single-module-project
-title: Single module project
+name: jbang-catalog-document-generator
+title: JBang Catalog Document Generator
 version: latest
 nav:
   - modules/ROOT/nav.adoc

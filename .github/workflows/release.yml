@@ -30,16 +30,19 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: Setup Java
-        uses: actions/setup-java@v3
+      - uses: graalvm/setup-graalvm@v1
+        name: Setup GraalVM 22.3.0
         with:
-          java-version: 8
-          distribution: 'temurin'
-          cache: 'maven'
+          version: '22.3.0'
+          java-version: '17'
+          components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          native-image-job-reports: 'true'
+          cache: maven
       - name: Stage Files for Release
         run: |
           ./mvnw versions:set -DnewVersion=$RELEASE_VERSION
-          ./mvnw -Prelease deploy -DaltDeploymentRepository=local::file:./target/staging-deploy -pl '!multi-module-project-report'
+          ./mvnw -Prelease deploy -DaltDeploymentRepository=local::file:./target/staging-deploy
         env:
           RELEASE_VERSION: ${{ inputs.releaseVersion }}
       - name: Run JReleaser - Full Release

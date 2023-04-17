@@ -1,0 +1,10 @@
+= Examples
+
+== AsciiDoc
+include::partial$jbang-catalog.adoc[Example JBang Catalog Document]
+
+== Markdown
+[source,markdown]
+----
+include::partial$jbang-catalog.md[Example JBang Catalog Document]
+----

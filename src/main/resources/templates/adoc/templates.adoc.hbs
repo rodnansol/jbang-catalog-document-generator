@@ -1,0 +1,31 @@
+{{#if catalog.templates~}}
+== Templates
+
+{{#each catalog.templates~}}
+=== {{@key}}
+
+{{#if this.description~}}
+[sidebar]
+{{this.description}}
+{{/if~}}
+[source, bash]
+----
+jbang init -t={{@key}} -Dproperty=value scriptOrFile
+----
+{{#if this.properties~}}
+
+{{#if customization.collapsibleProperties}}
+[%collapsible]
+.Properties
+====
+{{> templates/adoc/template-properties.adoc}}
+====
+{{else}}
+==== Properties
+{{> templates/adoc/template-properties.adoc}}
+{{/if}}
+
+{{/if}}
+
+{{/each}}
+{{/if}}

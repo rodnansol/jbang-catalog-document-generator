@@ -1,0 +1,15 @@
+{{#if catalog.aliases~}}
+== Aliases
+{{#each catalog.aliases}}
+=== {{@key}}
+[source, bash]
+----
+jbang {{@key}}{{#if this.arguments}} -- {{this.arguments}}{{/if}}{{#if this.javaOptions}} --java-options "{{this.javaOptions}}"{{/if}}{{#if this.dependencies}} --deps "{{this.dependencies}}"{{/if}}{{#if this.repositories}} --repos "{{this.repositories}}"{{/if}}{{#if this.classpaths}} --cp "{{this.classpaths}}"{{/if}}{{#if this.properties}} --properties "{{#each this.properties}}{{@key}}={{this}}{{#unless @last}},{{/unless}}{{/each}}"{{/if}}{{#if this.javaVersion}} --java {{this.javaVersion}}{{/if}}{{#if this.mainClass}} --main {{this.mainClass}}{{/if}}
+----
+
+{{#if this.description~}}
+[sidebar]
+{{this.description}}
+{{/if~}}
+{{/each}}
+{{/if~}}

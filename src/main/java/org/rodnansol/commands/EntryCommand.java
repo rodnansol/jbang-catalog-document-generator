@@ -1,4 +1,4 @@
-package org.rodnansol;
+package org.rodnansol.commands;
 
 import io.quarkus.picocli.runtime.annotations.TopCommand;
 import picocli.CommandLine;
@@ -8,7 +8,8 @@ import picocli.CommandLine;
  * @since 0.1.0
  */
 @TopCommand
-@CommandLine.Command(mixinStandardHelpOptions = true, subcommands = {ConvertCommand.class})
+@CommandLine.Command(mixinStandardHelpOptions = true, subcommands = {GenerateCommand.class})
 public class EntryCommand {
+
 }
 

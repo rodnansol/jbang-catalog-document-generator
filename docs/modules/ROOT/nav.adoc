@@ -1,1 +1,2 @@
 * xref:index.adoc[Homepage]
+* xref:examples.adoc[Examples]

@@ -328,6 +328,12 @@
 
     <profiles>
         <profile>
+            <id>uber-jar</id>
+            <properties>
+                <quarkus.package.type>uber-jar</quarkus.package.type>
+            </properties>
+        </profile>
+        <profile>
             <id>native</id>
             <activation>
                 <property>
@@ -415,6 +421,20 @@
                                         </nexus2>
                                     </maven>
                                 </deploy>
+                                <distributions>
+                                    <jbangCli>
+                                        <type>SINGLE_JAR</type>
+                                        <stereotype>CLI</stereotype>
+                                        <artifacts>
+                                            <artifact>
+                                                <path>target/jbang-catalog-document-generator-${project.version}-runner.jar</path>
+                                            </artifact>
+                                        </artifacts>
+                                        <tags>
+                                            <tag>cli</tag>
+                                        </tags>
+                                    </jbangCli>
+                                </distributions>
                             </jreleaser>
                             <projectCopyright>Apache-2.0</projectCopyright>
                         </configuration>

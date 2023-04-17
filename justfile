@@ -58,3 +58,11 @@ dry-release-config:
 # Creates a JBang "release"
 create-jbang-release version:
   ./scripts/jbang-version-release.sh {{version}}
+
+# Runs with AsciiDoc output
+adoc-example:
+  ./target/jbang-catalog-document-generator-999-SNAPSHOT-runner generate jbang-catalog.json -ch examples/custom-header.adoc -cf examples/custom-footer.adoc -o target/jbang-catalog.adoc
+
+# Runs with Markdown output
+md-example:
+  ./target/jbang-catalog-document-generator-999-SNAPSHOT-runner generate jbang-catalog.json -ch examples/custom-header.md -cf examples/custom-footer.md -o target/jbang-catalog.md

@@ -1,0 +1,28 @@
+{{#if catalog.templates~}}
+## Templates
+
+{{#each catalog.templates~}}
+### {{@key}}
+
+{{#if this.description~}}
+{{this.description}}
+{{/if~}}
+```bash
+jbang init -t={{@key}} -Dproperty=value scriptOrFile
+```
+{{#if this.properties~}}
+
+{{#if customization.collapsibleProperties}}
+<details>
+    <summary>Properties</summary>
+
+{{> templates/md/template-properties.md}}
+
+</details>
+{{else}}
+#### Properties
+{{> templates/md/template-properties.md}}
+{{/if}}
+{{/if}}
+{{/each}}
+{{/if}}

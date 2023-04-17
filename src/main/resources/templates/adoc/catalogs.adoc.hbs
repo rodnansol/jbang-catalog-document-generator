@@ -1,0 +1,6 @@
+{{#if catalog.catalogs~}}
+== Catalogs
+{{#each catalog.catalogs~}}
+* {{#if this.description}}{{this.catalogRef}}[{{this.description}}]{{else}}{{this.catalogRef}}[{{this.catalogRef}}]{{/if}}
+{{/each~}}
+{{/if~}}

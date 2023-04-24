@@ -33,6 +33,8 @@ public class GenerateCommand implements Runnable {
     private boolean headerAndFooterDirectRender = false;
     private String preferredCatalogName;
 
+    private boolean collapsibleUsageSection = false;
+
     public GenerateCommand(DocumentGenerationAction documentGenerationAction) {
         this.documentGenerationAction = documentGenerationAction;
     }
@@ -58,6 +60,7 @@ public class GenerateCommand implements Runnable {
         documentCustomization.setIncludeGenerationDate(includeGenerationDate);
         documentCustomization.setHeaderAndFooterDirectRender(headerAndFooterDirectRender);
         documentCustomization.setPreferredCatalogName(preferredCatalogName);
+        documentCustomization.setCollapsibleUsageSection(collapsibleUsageSection);
         return documentCustomization;
     }
 
@@ -175,5 +178,13 @@ public class GenerateCommand implements Runnable {
 
     public void setPreferredCatalogName(String preferredCatalogName) {
         this.preferredCatalogName = preferredCatalogName;
+    }
+
+    public boolean isCollapsibleUsageSection() {
+        return collapsibleUsageSection;
+    }
+
+    public void setCollapsibleUsageSection(boolean collapsibleUsageSection) {
+        this.collapsibleUsageSection = collapsibleUsageSection;
     }
 }

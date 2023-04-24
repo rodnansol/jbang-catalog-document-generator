@@ -1,0 +1,15 @@
+== Aliases
+
+=== hello
+[source, bash]
+----
+jbang hello <scriptOrFile>
+----
+
+[sidebar]
+Script that says hello back for each argument
+
+[source, bash]
+----
+This is a usage file, that will be rendered below the `hello` alias entry.
+----

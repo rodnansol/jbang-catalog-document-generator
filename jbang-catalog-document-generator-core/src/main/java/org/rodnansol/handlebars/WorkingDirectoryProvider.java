@@ -1,5 +1,8 @@
 package org.rodnansol.handlebars;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import org.rodnansol.document.DocumentGenerationProperties;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -9,11 +12,14 @@ import java.nio.file.Paths;
  * @author nandorholozsnyak
  * @since 0.1.0
  */
+@ApplicationScoped
 class WorkingDirectoryProvider {
 
-    public static final WorkingDirectoryProvider INSTANCE = new WorkingDirectoryProvider();
+    private final DocumentGenerationProperties documentGenerationProperties;
 
-    private WorkingDirectoryProvider(){}
+    public WorkingDirectoryProvider(DocumentGenerationProperties documentGenerationProperties){
+        this.documentGenerationProperties = documentGenerationProperties;
+    }
 
     /**
      * Returns the current working directory.
@@ -21,7 +27,7 @@ class WorkingDirectoryProvider {
      * @return current working directory.
      */
     public Path getCurrentWorkingDirectoryPath() {
-        return Paths.get(".").toAbsolutePath().normalize();
+        return Paths.get(documentGenerationProperties.currentWorkingDirectory()).toAbsolutePath().normalize();
     }
 
 }

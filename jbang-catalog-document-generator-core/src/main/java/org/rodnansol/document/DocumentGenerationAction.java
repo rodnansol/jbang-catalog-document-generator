@@ -62,7 +62,7 @@ public class DocumentGenerationAction {
             }
             DocumentData documentData = getDocumentData(createDocumentCommand);
             generateDocument(createDocumentCommand.templateType().getTemplate(), documentData, createDocumentCommand.outputFile());
-            LOGGER.info("AsciiDoc documentation generated successfully to: [{}]", createDocumentCommand.outputFile().getAbsolutePath());
+            LOGGER.info("Documentation generated successfully to: [{}]", createDocumentCommand.outputFile().getAbsolutePath());
             updateChecksum(createDocumentCommand);
         } catch (IOException e) {
             throw new DocumentGenerationException("Error during creating document", e);

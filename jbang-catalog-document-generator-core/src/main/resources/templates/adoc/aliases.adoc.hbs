@@ -11,5 +11,17 @@ jbang {{@key}}{{#if customization.preferredCatalogName}}@{{customization.preferr
 [sidebar]
 {{this.description}}
 {{/if~}}
+{{# has_custom_usage @key}}
+{{#if customization.collapsibleUsageSection ~}}
+.Usage
+[%collapsible]
+====
+{{> templates/adoc/usage-section.adoc}}
+====
+{{else}}
+.Usage
+{{> templates/adoc/usage-section.adoc}}
+{{/if}}
+{{/has_custom_usage}}
 {{/each}}
 {{/if~}}

@@ -309,7 +309,14 @@ This is a usage file, that will be rendered below the `hello` alias entry.
 
 ==== Result in AsciiDoc
 
+ifndef::env-github[]
 include::example$document-with-usage.adoc[]
+endif::[]
+ifdef::env-github[]
+include::docs/modules/ROOT/examples/document-with-usage.adoc[]
+endif::[]
+
+
 
 It can put behind a collapsible section with the `-cus` (`--collapsible-usage-section`) flag.
 

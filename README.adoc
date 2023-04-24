@@ -225,6 +225,8 @@ Generates a documentation for a given jbang-catalog.json file
   -o, --output=<outputFile>
                     The output AsciiDoc file name. Defaults to 'jbang-catalog.
                       adoc'
+      -pcn, --preferred-catalog-name=<preferredCatalogName>
+                    Defines the preferred catalog name.
   -t, --template=<customTemplatePath>
                     Custom template path.
       -toc, --table-of-contents

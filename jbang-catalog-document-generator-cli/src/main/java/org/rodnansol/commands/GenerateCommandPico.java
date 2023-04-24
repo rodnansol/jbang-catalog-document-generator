@@ -96,4 +96,10 @@ public class GenerateCommandPico extends GenerateCommand {
     public void setHeaderAndFooterDirectRender(boolean headerAndFooterDirectRender) {
         super.setHeaderAndFooterDirectRender(headerAndFooterDirectRender);
     }
+
+    @Override
+    @CommandLine.Option(names = {"-pcn", "--preferred-catalog-name"}, description = "Defines the preferred catalog name.")
+    public void setPreferredCatalogName(String preferredCatalogName) {
+        super.setPreferredCatalogName(preferredCatalogName);
+    }
 }

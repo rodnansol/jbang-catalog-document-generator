@@ -81,8 +81,8 @@ help-example:
 
 # Runs with AsciiDoc output
 adoc-example:
-  java -jar jbang-catalog-document-generator-cli/target/jbang-catalog-document-generator-cli-999-SNAPSHOT.jar generate docs/modules/ROOT/examples/jbang-catalog.json -ch examples/custom-header.adoc -cf examples/custom-footer.adoc -o target/jbang-catalog.adoc --check-checksum=false -hfdr
+  java -jar jbang-catalog-document-generator-cli/target/jbang-catalog-document-generator-cli-999-SNAPSHOT.jar generate docs/modules/ROOT/examples/jbang-catalog.json -ch examples/custom-header.adoc -cf examples/custom-footer.adoc -o target/jbang-catalog.adoc --check-checksum=false -hfdr -pcn="personal-rodnan"
 
 # Runs with Markdown output
 md-example:
-  java -jar jbang-catalog-document-generator-cli/target/jbang-catalog-document-generator-cli-999-SNAPSHOT.jar generate -tt MD docs/modules/ROOT/examples/jbang-catalog.json -ch examples/custom-header.md -cf examples/custom-footer.md -o target/jbang-catalog.md --check-checksum=false
+  java -jar jbang-catalog-document-generator-cli/target/jbang-catalog-document-generator-cli-999-SNAPSHOT.jar generate -tt MD docs/modules/ROOT/examples/jbang-catalog.json -ch examples/custom-header.md -cf examples/custom-footer.md -o target/jbang-catalog.md --check-checksum=false -pcn="personal-rodnan"

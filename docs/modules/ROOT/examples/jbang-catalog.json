@@ -22,7 +22,7 @@
         "application.properties": "aws/application.properties",
         "lambda-{basename}.tf": "aws/lambda.tf.qute"
       },
-      "description": "Quarkus AWS Lambda template with Terraform template. Use the -Dnative-function flag to have native image based Terraform resources",
+      "description": "Quarkus AWS Lambda template with Terraform template. +\nUse the -Dnative-function flag to have native image based Terraform resources",
       "properties": {
         "mode": {
           "description": "Quarkus Lambda mode: simple or funq",

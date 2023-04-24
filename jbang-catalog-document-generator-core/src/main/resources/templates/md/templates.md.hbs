@@ -8,7 +8,7 @@
 {{this.description}}
 {{/if~}}
 ```bash
-jbang init -t={{@key}} -Dproperty=value scriptOrFile
+jbang init -t={{@key}}{{#if customization.preferredCatalogName}}@{{customization.preferredCatalogName}}{{/if}} -Dproperty=value <scriptOrFile>
 ```
 {{#if this.properties~}}
 

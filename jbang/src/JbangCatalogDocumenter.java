@@ -101,6 +101,12 @@ class GenerateCommandPico extends GenerateCommand {
     public void setIncludeGenerationDate(boolean includeGenerationDate) {
         super.setIncludeGenerationDate(includeGenerationDate);
     }
+
+    @Override
+    @CommandLine.Option(names = {"-pcn", "--preferred-catalog-name"}, description = "Defines the preferred catalog name.")
+    public void setPreferredCatalogName(String preferredCatalogName) {
+        super.setPreferredCatalogName(preferredCatalogName);
+    }
 }
 
 

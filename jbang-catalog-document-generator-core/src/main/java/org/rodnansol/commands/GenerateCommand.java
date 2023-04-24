@@ -31,6 +31,7 @@ public class GenerateCommand implements Runnable {
     private boolean checkChecksum = true;
     private boolean includeGenerationDate = false;
     private boolean headerAndFooterDirectRender = false;
+    private String preferredCatalogName;
 
     public GenerateCommand(DocumentGenerationAction documentGenerationAction) {
         this.documentGenerationAction = documentGenerationAction;
@@ -56,6 +57,7 @@ public class GenerateCommand implements Runnable {
         documentCustomization.setTocLevels(tocLevels);
         documentCustomization.setIncludeGenerationDate(includeGenerationDate);
         documentCustomization.setHeaderAndFooterDirectRender(headerAndFooterDirectRender);
+        documentCustomization.setPreferredCatalogName(preferredCatalogName);
         return documentCustomization;
     }
 
@@ -165,5 +167,13 @@ public class GenerateCommand implements Runnable {
 
     public void setHeaderAndFooterDirectRender(boolean headerAndFooterDirectRender) {
         this.headerAndFooterDirectRender = headerAndFooterDirectRender;
+    }
+
+    public String getPreferredCatalogName() {
+        return preferredCatalogName;
+    }
+
+    public void setPreferredCatalogName(String preferredCatalogName) {
+        this.preferredCatalogName = preferredCatalogName;
     }
 }

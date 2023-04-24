@@ -76,6 +76,15 @@ public class DocumentCustomization {
      */
     private boolean headerAndFooterDirectRender = false;
 
+    /**
+     * Name of the prefered catalog.
+     * <p>
+     * It is used to give context for the aliases and templates.
+     *
+     * @since 0.2.0
+     */
+    private String preferredCatalogName;
+
     public boolean isEnableTableOfContents() {
         return enableTableOfContents;
     }
@@ -148,6 +157,14 @@ public class DocumentCustomization {
         this.headerAndFooterDirectRender = headerAndFooterDirectRender;
     }
 
+    public String getPreferredCatalogName() {
+        return preferredCatalogName;
+    }
+
+    public void setPreferredCatalogName(String preferredCatalogName) {
+        this.preferredCatalogName = preferredCatalogName;
+    }
+
     @Override
     public String toString() {
         return new StringJoiner(", ", DocumentCustomization.class.getSimpleName() + "[", "]")
@@ -160,6 +177,7 @@ public class DocumentCustomization {
             .add("collapsibleProperties=" + collapsibleProperties)
             .add("includeGenerationDate=" + includeGenerationDate)
             .add("headerAndFooterDirectRender=" + headerAndFooterDirectRender)
+            .add("preferredCatalogName='" + preferredCatalogName + "'")
             .toString();
     }
 }

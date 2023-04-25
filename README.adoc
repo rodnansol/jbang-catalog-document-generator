@@ -65,7 +65,7 @@ Catalogs (simple JSON files) can be put into a Git repository and other develope
     },
     "rodnansol": {
       "catalog-ref": "https://github.com/rodnansol/jbang-catalog/blob/HEAD/jbang-catalog.json",
-      "description": "RodnanSol JBang Catalog"
+      "description": "Rodnan Sol JBang Catalog"
     }
   },
   "aliases": {
@@ -305,6 +305,10 @@ The alias entries can be extended with a help/usage section where the usage of t
 [source,txt]
 ----
 This is a usage file, that will be rendered below the `hello` alias entry.
+
+!%$&@ So you want to use this script? !%$&@
+
+< Let me show you how you can use it. >
 ----
 
 ==== Result in AsciiDoc

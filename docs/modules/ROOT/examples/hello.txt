@@ -1,3 +1,5 @@
-!%$&@ So you want to use this script?
+This is a usage file, that will be rendered below the `hello` alias entry.
+
+!%$&@ So you want to use this script? !%$&@
 
 < Let me show you how you can use it. >

@@ -85,6 +85,13 @@ public class DocumentCustomization {
      */
     private String preferredCatalogName;
 
+    /**
+     * Defines if the usage section should be collapsible or not.
+     *
+     * @since 0.2.0
+     */
+    private boolean collapsibleUsageSection = false;
+
     public boolean isEnableTableOfContents() {
         return enableTableOfContents;
     }
@@ -165,6 +172,14 @@ public class DocumentCustomization {
         this.preferredCatalogName = preferredCatalogName;
     }
 
+    public boolean isCollapsibleUsageSection() {
+        return collapsibleUsageSection;
+    }
+
+    public void setCollapsibleUsageSection(boolean collapsibleUsageSection) {
+        this.collapsibleUsageSection = collapsibleUsageSection;
+    }
+
     @Override
     public String toString() {
         return new StringJoiner(", ", DocumentCustomization.class.getSimpleName() + "[", "]")
@@ -178,6 +193,7 @@ public class DocumentCustomization {
             .add("includeGenerationDate=" + includeGenerationDate)
             .add("headerAndFooterDirectRender=" + headerAndFooterDirectRender)
             .add("preferredCatalogName='" + preferredCatalogName + "'")
+            .add("collapsibleUsageSection=" + collapsibleUsageSection)
             .toString();
     }
 }

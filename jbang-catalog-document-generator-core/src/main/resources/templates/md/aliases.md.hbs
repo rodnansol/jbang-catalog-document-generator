@@ -8,5 +8,17 @@ jbang {{@key}}{{#if customization.preferredCatalogName}}@{{customization.preferr
 {{#if this.description~}}
 {{this.description}}
 {{/if~}}
+{{# has_custom_usage @key ~}}
+{{#if customization.collapsibleUsageSection ~}}
+<details>
+    <summary>Usage</summary>
+
+{{> templates/md/usage-section.md}}
+</details>
+{{else}}
+#### Usage
+{{> templates/md/usage-section.md}}
+{{/if}}
+{{/has_custom_usage}}
 {{/each}}
 {{/if~}}

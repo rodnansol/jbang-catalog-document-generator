@@ -4,6 +4,7 @@ import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.io.ClassPathTemplateLoader;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
+import org.rodnansol.document.DocumentGenerationProperties;
 
 /**
  * Handlebars configuration class.
@@ -17,8 +18,12 @@ import jakarta.enterprise.inject.Produces;
 public class HandlebarsConfiguration {
 
     @Produces
-    public Handlebars handlebars() {
-        return new Handlebars().with(new ClassPathTemplateLoader(), new WorkingDirectoryAwareRecursiveFileTemplateLoader(".", WorkingDirectoryProvider.INSTANCE));
+    public Handlebars handlebars(DocumentGenerationProperties documentGenerationProperties,
+                                 WorkingDirectoryProvider workingDirectoryProvider) {
+        return new Handlebars()
+            .registerHelper("has_custom_usage", new HasCustomUsageHelper(documentGenerationProperties))
+            .registerHelper("render_custom_usage", new CustomUsageRenderHelper(documentGenerationProperties))
+            .with(new ClassPathTemplateLoader(), new WorkingDirectoryAwareRecursiveFileTemplateLoader(documentGenerationProperties.currentWorkingDirectory(), workingDirectoryProvider));
     }
 
 }

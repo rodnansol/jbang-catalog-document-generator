@@ -65,7 +65,7 @@ Catalogs (simple JSON files) can be put into a Git repository and other develope
     },
     "rodnansol": {
       "catalog-ref": "https://github.com/rodnansol/jbang-catalog/blob/HEAD/jbang-catalog.json",
-      "description": "RodnanSol JBang Catalog"
+      "description": "Rodnan Sol JBang Catalog"
     }
   },
   "aliases": {
@@ -200,9 +200,10 @@ Download the uber-jar/fatjar and run it with *Java 17*(!).
 [source,bash]
 ----
 java -jar jbang-catalog-document-generator-cli/target/jbang-catalog-document-generator-cli-999-SNAPSHOT.jar generate
-Usage: <main class> generate [-g] [-cc] [-hfdr] [-toc]
+Usage: <main class> generate [-g] [-cc] [-cus] [-hfdr] [-toc]
                              [-cf=<customFooterFilePath>]
                              [-ch=<customHeaderFilePath>] [-o=<outputFile>]
+                             [-pcn=<preferredCatalogName>]
                              [-t=<customTemplatePath>] [-toc-l=<tocLevels>]
                              [-toc-p=<tocPlacement>] [-toc-t=<tocTitle>]
                              [-tt=<templateType>] <inputFile>
@@ -215,6 +216,8 @@ Generates a documentation for a given jbang-catalog.json file
                     Path to a custom footer.
       -ch, --custom-header=<customHeaderFilePath>
                     Path to a custom header.
+      -cus, --collapsible-usage-section
+                    Defines if the usage section should be collapsible or not
   -g, --include-generation-date
                     Defines if the generation date should be put into the
                       document or not.
@@ -278,7 +281,61 @@ endif::[]
 
 == Customization options
 
+=== Custom header and footer
 Custom header and custom footer can be attached to make sure introductions and other important stuff can be put into the final document.
+
+=== Alias usages
+
+The alias entries can be extended with a help/usage section where the usage of the script can have a detailed description, for example if it is a CLI application the usage of the app or the flags can be put here.
+
+.Example jbang-catalog.json
+[source,json]
+----
+{
+  "aliases": {
+    "hello": {
+      "script-ref": "hello.java",
+      "description": "Script that says hello back for each argument"
+    }
+  }
+}
+----
+
+.hello.txt
+[source,txt]
+----
+This is a usage file, that will be rendered below the `hello` alias entry.
+
+!%$&@ So you want to use this script? !%$&@
+
+< Let me show you how you can use it. >
+----
+
+==== Result in AsciiDoc
+
+ifndef::env-github[]
+include::example$document-with-usage.adoc[]
+endif::[]
+ifdef::env-github[]
+include::docs/modules/ROOT/examples/document-with-usage.adoc[]
+endif::[]
+
+
+
+It can put behind a collapsible section with the `-cus` (`--collapsible-usage-section`) flag.
+
+'''
+=== Working directory
+
+Since the 0.2.0 version the current working directory can be overwritten which can help you to read the usages from a different path if you wish. It can be overwritten with the `-Dapp.document.current-working-directory=` flag when using the `java` command.
+
+.Example
+[source,bash]
+----
+java -Dapp.document.current-working-directory=new-working/directory -jar jbang-catalog-document-generator-cli.jar generate jbang-catalog.json
+----
+
+In this case the *alias* usages will be read from the *new-working/directory* folder.
 
 == Contribution
 

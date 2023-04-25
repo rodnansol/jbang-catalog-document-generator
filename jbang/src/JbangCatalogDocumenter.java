@@ -107,6 +107,12 @@ class GenerateCommandPico extends GenerateCommand {
     public void setPreferredCatalogName(String preferredCatalogName) {
         super.setPreferredCatalogName(preferredCatalogName);
     }
+
+    @Override
+    @CommandLine.Option(names = {"-cus", "--collapsible-usage-section"}, description = "Defines if the usage section should be collapsible or not")
+    public void setCollapsibleUsageSection(boolean collapsibleUsageSection) {
+        super.setCollapsibleUsageSection(collapsibleUsageSection);
+    }
 }
 
 

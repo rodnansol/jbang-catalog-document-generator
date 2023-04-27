@@ -1,5 +1,17 @@
 {{#with customization~}}
 {{#if enableTableOfContents~}}
+## {{#if tocTitle}}{{tocTitle}}{{else}}Table of contents{{/if}}
+{{#if catalog.catalogs ~}}
+* [**Catalogs**](#Catalogs)
+{{/if ~}}
+{{#if catalog.aliases ~}}
+* [**Aliases**](#Aliases)
+{{#each catalog.aliases}}  * [**{{@key}}**](#{{@key}}){{/each}}
+{{/if ~}}
+{{#if catalog.templates ~}}
+* [**Templates**](#Templates)
+{{#each catalog.templates}}  * [**{{@key}}**](#{{@key}}){{/each}}
+{{/if ~}}
 {{/if~}}
 {{/with~}}
 

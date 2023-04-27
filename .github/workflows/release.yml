@@ -39,6 +39,12 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           native-image-job-reports: 'true'
           cache: maven
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.PAT }}
       - name: Stage Files for Release
         run: |
           ./mvnw versions:set -DnewVersion=$RELEASE_VERSION

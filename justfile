@@ -85,4 +85,4 @@ adoc-example:
 
 # Runs with Markdown output
 md-example:
-  java -Dapp.document.current-working-directory=docs/modules/ROOT/examples -jar jbang-catalog-document-generator-cli/target/jbang-catalog-document-generator-cli-999-SNAPSHOT.jar generate -tt MD docs/modules/ROOT/examples/jbang-catalog.json -ch examples/custom-header.md -cf examples/custom-footer.md -o target/jbang-catalog.md --check-checksum=false -pcn="personal-rodnan" -cus=true
+  java -Dapp.document.current-working-directory=docs/modules/ROOT/examples -jar jbang-catalog-document-generator-cli/target/jbang-catalog-document-generator-cli-999-SNAPSHOT.jar generate -tt MD docs/modules/ROOT/examples/jbang-catalog.json -ch examples/custom-header.md -cf examples/custom-footer.md -o target/jbang-catalog.md --check-checksum=false -pcn="personal-rodnan" -cus=true -toc=true

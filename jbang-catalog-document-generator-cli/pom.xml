@@ -48,7 +48,21 @@
                 <quarkus.package.type>uber-jar</quarkus.package.type>
             </properties>
         </profile>
+        <profile>
+            <id>release</id>
+            <properties>
+                <quarkus.container-image.build>true</quarkus.container-image.build>
+                <quarkus.container-image.push>true</quarkus.container-image.push>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>io.quarkus</groupId>
+                    <artifactId>quarkus-container-image-jib</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
     </profiles>
+
     <build>
         <resources>
             <resource>
@@ -67,5 +81,6 @@
             </plugin>
         </plugins>
     </build>
+
 
 </project>

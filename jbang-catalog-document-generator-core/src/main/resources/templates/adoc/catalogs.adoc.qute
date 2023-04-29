@@ -1,0 +1,6 @@
+{#if catalog.catalogs}
+== Catalogs
+{#each catalog.catalogs}
+* {#if it.value.description}{it.value.catalogRef}[{it.value.description}]{#else}{it.value.catalogRef}[{it.value.catalogRef}]{/if}
+{/each}
+{/if}

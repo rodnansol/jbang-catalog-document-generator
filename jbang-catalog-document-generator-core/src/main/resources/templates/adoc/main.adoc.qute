@@ -1,0 +1,9 @@
+{#include templates/adoc/header.adoc.qute /}
+
+{#include templates/adoc/catalogs.adoc.qute /}
+
+{#include templates/adoc/aliases.adoc.qute /}
+
+{#include templates/adoc/templates.adoc.qute /}
+
+{#include templates/adoc/footer.adoc.qute /}

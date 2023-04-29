@@ -1,5 +1,6 @@
 package org.rodnansol.document;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import org.rodnansol.document.model.Catalog;
 
 import java.time.LocalDateTime;
@@ -14,7 +15,8 @@ import java.time.LocalDateTime;
  * @author nandorholozsnyak
  * @since 0.1.0
  */
-record DocumentData(
+@RegisterForReflection
+public record DocumentData(
     Catalog catalog,
     DocumentCustomization customization,
     CustomContent customContent,

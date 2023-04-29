@@ -1,0 +1,32 @@
+{#if catalog.aliases}
+== Aliases
+{#each catalog.aliases}
+=== {it.key}
+
+[source, bash]
+----
+jbang {it.key}{#if customization.preferredCatalogName}@{customization.preferredCatalogName}{/if} {#if it.value.arguments} -- {it.value.arguments}{/if}{#if it.value.javaOptions} --java-options "{it.value.javaOptions}"{/if}{#if it.value.dependencies} --deps "{it.value.dependencies}"{/if}{#if it.value.repositories} --repos "{it.value.repositories}"{/if}{#if it.value.classpaths} --cp "{it.value.classpaths}"{/if}{#if it.value.java} --java {it.value.java}{/if}{#if it.value.main} --main {it.value.main}{/if} <scriptOrFile>
+----
+
+{#if it.value.description}
+[sidebar]
+{it.value.description}
+{/if}
+{#hasUsage it.key}
+{#if customization.collapsibleUsageSection }
+.Usage
+[%collapsible]
+====
+
+{#include templates/adoc/usage-section.adoc.qute /}
+
+====
+{#else}
+
+.Usage
+{#include templates/adoc/usage-section.adoc.qute /}
+
+{/if}
+{/hasUsage}
+{/each}
+{/if}

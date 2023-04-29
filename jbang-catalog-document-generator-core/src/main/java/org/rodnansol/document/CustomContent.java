@@ -1,5 +1,7 @@
 package org.rodnansol.document;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
 /**
  * Record representing the result of the custom content parsing.
  * <p>
@@ -11,6 +13,7 @@ package org.rodnansol.document;
  * @author nandorholozsnyak
  * @since 0.1.0
  */
+@RegisterForReflection
 public record CustomContent(
     String customHeaderContent,
     String customFooterContent) {

@@ -1,0 +1,35 @@
+{#if catalog.templates}
+== Templates
+
+{#each catalog.templates}
+=== {it.key}
+
+{#if it.value.description}
+[sidebar]
+{it.value.description}
+{/if}
+[source, bash]
+----
+jbang init -t={it.key}{#if customization.preferredCatalogName}@{customization.preferredCatalogName}{/if} -Dproperty=value <scriptOrFile>
+----
+{#if it.value.properties}
+
+{#if customization.collapsibleProperties}
+[%collapsible]
+.Properties
+====
+
+{#include templates/adoc/template-properties.adoc.qute /}
+
+====
+
+{#else}
+
+==== Properties
+
+{#include templates/adoc/template-properties.adoc.qute /}
+
+{/if}
+{/if}
+{/each}
+{/if}

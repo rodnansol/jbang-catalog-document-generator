@@ -8,7 +8,7 @@ package org.rodnansol.document;
  */
 public enum TemplateType {
 
-    ADOC(".adoc", "templates/adoc/main.adoc"),
+    ADOC(".adoc", "templates/adoc/main.adoc.qute"),
     MD(".md", "templates/md/main.md");
 
     private final String extension;

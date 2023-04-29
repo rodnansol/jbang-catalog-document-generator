@@ -1,13 +1,12 @@
 package org.rodnansol.document;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.jknack.handlebars.Handlebars;
-import com.github.jknack.handlebars.Template;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.rodnansol.document.checksum.ChecksumCalculationException;
 import org.rodnansol.document.checksum.ChecksumService;
 import org.rodnansol.document.customcontent.CustomContentParserContext;
 import org.rodnansol.document.model.Catalog;
+import org.rodnansol.document.template.TemplateCompiler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,18 +25,18 @@ import java.util.Objects;
 public class DocumentGenerationAction {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(DocumentGenerationAction.class);
-    private final Handlebars handlebars;
+    private final TemplateCompiler templateCompiler;
     private final ObjectMapper objectMapper;
     private final FileWriterService fileWriterService;
     private final ChecksumService checksumService;
     private final CustomContentParserContext customContentParserContext;
 
-    public DocumentGenerationAction(Handlebars handlebars,
+    public DocumentGenerationAction(TemplateCompiler templateCompiler,
                                     ObjectMapper objectMapper,
                                     FileWriterService fileWriterService,
                                     ChecksumService checksumService,
                                     CustomContentParserContext customContentParserContext) {
-        this.handlebars = handlebars;
+        this.templateCompiler = templateCompiler;
         this.objectMapper = objectMapper;
         this.fileWriterService = fileWriterService;
         this.checksumService = checksumService;
@@ -93,8 +92,7 @@ public class DocumentGenerationAction {
     }
 
     private void generateDocument(String templatePath, DocumentData documentData, File outputFile) throws IOException {
-        Template template = handlebars.compile(templatePath);
-        String content = template.apply(documentData);
+        String content = templateCompiler.generateDocument(templatePath, documentData);
         LOGGER.debug("Writing generated content to file:[{}]", outputFile.getAbsolutePath());
         fileWriterService.writeContentToFile(outputFile, content);
     }

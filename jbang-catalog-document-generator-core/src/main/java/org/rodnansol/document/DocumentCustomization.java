@@ -1,5 +1,7 @@
 package org.rodnansol.document;
 
+import io.quarkus.runtime.annotations.RegisterForReflection;
+
 import java.util.StringJoiner;
 
 /**
@@ -8,6 +10,7 @@ import java.util.StringJoiner;
  * @author nandorholozsnyak
  * @since 0.1.0
  */
+@RegisterForReflection
 public class DocumentCustomization {
 
     /**

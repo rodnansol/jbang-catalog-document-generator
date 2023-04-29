@@ -1,0 +1,5 @@
+{#if catalog.description}= {catalog.description} {/if}
+{#include templates/adoc/toc.adoc.qute /}
+{#if customContent.customHeaderContent}
+{customContent.customHeaderContent.raw}
+{/if}

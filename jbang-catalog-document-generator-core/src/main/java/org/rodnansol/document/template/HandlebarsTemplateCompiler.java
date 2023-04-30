@@ -2,11 +2,12 @@ package org.rodnansol.document.template;
 
 import com.github.jknack.handlebars.Handlebars;
 import com.github.jknack.handlebars.Template;
+import jakarta.enterprise.context.Dependent;
 import org.rodnansol.document.DocumentData;
 
 import java.io.IOException;
 
-//@Dependent
+@Dependent
 public class HandlebarsTemplateCompiler implements TemplateCompiler {
 
     private final Handlebars handlebars;

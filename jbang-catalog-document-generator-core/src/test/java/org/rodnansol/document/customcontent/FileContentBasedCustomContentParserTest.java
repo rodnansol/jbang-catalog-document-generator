@@ -5,9 +5,13 @@ import org.junit.jupiter.api.io.TempDir;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.rodnansol.document.CustomContent;
 import org.rodnansol.document.DocumentCustomization;
+import org.rodnansol.document.DocumentGenerationProperties;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,11 +19,17 @@ import java.nio.file.Path;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class FileContentBasedCustomContentParserTest {
 
-    FileContentBasedCustomContentParser underTest = new FileContentBasedCustomContentParser();
+    @Mock
+    DocumentGenerationProperties documentGenerationProperties;
+
+    @InjectMocks
+    FileContentBasedCustomContentParser underTest;
 
     @TempDir
     Path tempDir;
@@ -37,6 +47,7 @@ class FileContentBasedCustomContentParserTest {
     @MethodSource("customArgs")
     void createCustomContent_shouldReturnCustomContentWithContentsOfTheGivenFile(TestCase testCase) throws IOException {
         // Given
+        lenient().when(documentGenerationProperties.currentWorkingDirectory()).thenReturn("/");
         DocumentCustomization documentCustomization = new DocumentCustomization();
         if (testCase.headerContent != null) {
             Path resolve = tempDir.resolve("custom-header.txt");

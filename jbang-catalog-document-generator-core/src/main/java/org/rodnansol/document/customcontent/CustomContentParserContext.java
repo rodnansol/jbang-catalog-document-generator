@@ -20,10 +20,12 @@ import java.util.Objects;
 public class CustomContentParserContext {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomContentParserContext.class);
-
+    private final FileContentBasedCustomContentParser fileContentBasedCustomContentParser;
     private final Map<CustomContentParserKey, CustomContentParser> parserMap;
 
-    public CustomContentParserContext(Map<CustomContentParserKey, CustomContentParser> parserMap) {
+    public CustomContentParserContext(FileContentBasedCustomContentParser fileContentBasedCustomContentParser,
+                                      Map<CustomContentParserKey, CustomContentParser> parserMap) {
+        this.fileContentBasedCustomContentParser = fileContentBasedCustomContentParser;
         this.parserMap = parserMap;
     }
 
@@ -39,7 +41,7 @@ public class CustomContentParserContext {
     public CustomContent createCustomContentBy(TemplateType templateType, DocumentCustomization documentCustomization) {
         Objects.requireNonNull(templateType, "templateType is NULL");
         Objects.requireNonNull(documentCustomization, "documentCustomization is NULL");
-        CustomContentParser contentParser = parserMap.getOrDefault(new CustomContentParserKey(templateType, documentCustomization.isHeaderAndFooterDirectRender()), new FileContentBasedCustomContentParser());
+        CustomContentParser contentParser = parserMap.getOrDefault(new CustomContentParserKey(templateType, documentCustomization.isHeaderAndFooterDirectRender()), fileContentBasedCustomContentParser);
         LOGGER.debug("Content parser being used:[{}]", contentParser);
         return contentParser
             .createCustomContent(documentCustomization);

@@ -3,6 +3,8 @@ package org.rodnansol.handlebars;
 import com.github.jknack.handlebars.Helper;
 import com.github.jknack.handlebars.Options;
 import org.rodnansol.document.DocumentGenerationProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,6 +24,8 @@ import java.nio.file.Path;
  */
 class HasCustomUsageHelper implements Helper<String> {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(HasCustomUsageHelper.class);
+
     private final DocumentGenerationProperties documentGenerationProperties;
 
     public HasCustomUsageHelper(DocumentGenerationProperties documentGenerationProperties) {
@@ -30,10 +34,12 @@ class HasCustomUsageHelper implements Helper<String> {
 
     @Override
     public Object apply(String context, Options options) throws IOException {
-        return Files.exists(Path.of(getPath(context))) ? options.fn(context) : options.inverse(context);
+        boolean hasUsage = Files.exists(Path.of(getPath(context)));
+        LOGGER.debug("Entry with value:[{}] usage file existence result:[{}]", context, hasUsage);
+        return hasUsage ? options.fn(context) : options.inverse(context);
     }
 
     private String getPath(String context) {
-        return documentGenerationProperties.currentWorkingDirectory() + "/" + context + CustomUsageConstants.EXTENSION;
+        return documentGenerationProperties.aliasUsageFolderPath() + "/" + context + CustomUsageConstants.EXTENSION;
     }
 }

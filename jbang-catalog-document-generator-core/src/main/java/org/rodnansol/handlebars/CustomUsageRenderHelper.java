@@ -3,6 +3,8 @@ package org.rodnansol.handlebars;
 import com.github.jknack.handlebars.Helper;
 import com.github.jknack.handlebars.Options;
 import org.rodnansol.document.DocumentGenerationProperties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -22,6 +24,8 @@ import java.nio.file.Path;
  */
 class CustomUsageRenderHelper implements Helper<String> {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomUsageRenderHelper.class);
+
     private final DocumentGenerationProperties documentGenerationProperties;
 
     public CustomUsageRenderHelper(DocumentGenerationProperties documentGenerationProperties) {
@@ -30,11 +34,13 @@ class CustomUsageRenderHelper implements Helper<String> {
 
     @Override
     public Object apply(String context, Options options) throws IOException {
-        byte[] bytes = Files.readAllBytes(Path.of(getPath(context)));
+        Path path = Path.of(getPath(context));
+        LOGGER.debug("Resolving usage for entry:[{}] at path:[{}]", context, path);
+        byte[] bytes = Files.readAllBytes(path);
         return new String(bytes, StandardCharsets.UTF_8);
     }
 
     private String getPath(String context) {
-        return documentGenerationProperties.currentWorkingDirectory() + "/" + context + CustomUsageConstants.EXTENSION;
+        return documentGenerationProperties.aliasUsageFolderPath() + "/" + context + CustomUsageConstants.EXTENSION;
     }
 }

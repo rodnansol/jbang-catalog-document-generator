@@ -49,9 +49,30 @@
             </properties>
         </profile>
         <profile>
-            <id>release</id>
+            <id>upload-docker-image</id>
+            <properties>
+                <quarkus.container-image.push>true</quarkus.container-image.push>
+            </properties>
+        </profile>
+        <profile>
+            <id>jvm-docker</id>
             <properties>
                 <quarkus.container-image.build>true</quarkus.container-image.build>
+            </properties>
+            <dependencies>
+                <dependency>
+                    <groupId>io.quarkus</groupId>
+                    <artifactId>quarkus-container-image-jib</artifactId>
+                </dependency>
+            </dependencies>
+        </profile>
+        <profile>
+            <id>native-docker</id>
+            <properties>
+                <quarkus.container-image.build>true</quarkus.container-image.build>
+                <quarkus.native.container-build>true</quarkus.native.container-build>
+                <quarkus.native.reuse-existing>true</quarkus.native.reuse-existing>
+                <quarkus.container-image.tag>${project.version}-native</quarkus.container-image.tag>
                 <quarkus.container-image.push>true</quarkus.container-image.push>
             </properties>
             <dependencies>

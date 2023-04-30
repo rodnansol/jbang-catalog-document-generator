@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Class handling the document generation logic.
@@ -53,7 +54,7 @@ public class DocumentGenerationAction {
      */
     public void parseJsonFileAndGenerateDocument(CreateDocumentCommand createDocumentCommand) {
         Objects.requireNonNull(createDocumentCommand, "createDocumentCommand is NULL");
-        LOGGER.info("Generating document based on command:[{}]", createDocumentCommand);
+        LOGGER.info("Generating document based on command: {}", createDocumentCommand);
         try {
             if (createDocumentCommand.checkChecksum() && isChecksumEquals(createDocumentCommand)) {
                 LOGGER.info("Input file has not changed since last time, generation is skipped....");
@@ -61,7 +62,7 @@ public class DocumentGenerationAction {
                 return;
             }
             DocumentData documentData = getDocumentData(createDocumentCommand);
-            generateDocument(createDocumentCommand.templateType().getTemplate(), documentData, createDocumentCommand.outputFile());
+            generateDocument(createDocumentCommand, documentData);
             LOGGER.info("Documentation generated successfully to: [{}]", createDocumentCommand.outputFile().getAbsolutePath());
             updateChecksum(createDocumentCommand);
         } catch (IOException e) {
@@ -92,10 +93,12 @@ public class DocumentGenerationAction {
         return objectMapper.readValue(file, Catalog.class);
     }
 
-    private void generateDocument(String templatePath, DocumentData documentData, File outputFile) throws IOException {
+    private void generateDocument(CreateDocumentCommand createDocumentCommand, DocumentData documentData) throws IOException {
+        String templatePath = Optional.ofNullable(createDocumentCommand.customTemplatePath())
+            .orElse(createDocumentCommand.templateType().getTemplate());
         Template template = handlebars.compile(templatePath);
         String content = template.apply(documentData);
-        LOGGER.debug("Writing generated content to file:[{}]", outputFile.getAbsolutePath());
+        File outputFile = createDocumentCommand.outputFile();
         fileWriterService.writeContentToFile(outputFile, content);
     }
 

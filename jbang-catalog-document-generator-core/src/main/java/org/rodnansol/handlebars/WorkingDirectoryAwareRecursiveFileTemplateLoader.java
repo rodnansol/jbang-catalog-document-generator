@@ -37,18 +37,25 @@ class WorkingDirectoryAwareRecursiveFileTemplateLoader extends FileTemplateLoade
             return resource;
         }
         String normalizedInput = Path.of(location).normalize().toString();
-        String extension = FilenameUtils.getExtension(location);
-        Collection<File> childFiles = FileUtils.listFiles(workingDirectoryProvider.getCurrentWorkingDirectoryPath().toFile(), new String[]{extension}, true);
-        File optionalFile = childFiles.stream()
-            .filter(file -> file.getPath().contains(normalizedInput))
-            .findFirst()
-            .orElse(null);
+        LOGGER.debug("Looking for path with normaliztion:[{}]", normalizedInput);
+        File optionalFile = getPossilbeFile(location, normalizedInput);
         if (optionalFile == null) {
-            LOGGER.debug("Unable to find resource at location:[{}]", location);
+            LOGGER.debug("Unable to find resource at location:[{}], null will be returned", location);
             return null;
         }
         LOGGER.debug("Final location:[{}] for input:[{}]", optionalFile.getPath(), location);
         return optionalFile.exists() ? optionalFile.toURI().toURL() : null;
+    }
+
+    private File getPossilbeFile(String location, String normalizedInput) {
+        String extension = FilenameUtils.getExtension(location);
+        File pathUnderTest = workingDirectoryProvider.getCurrentWorkingDirectoryPath().toFile();
+        LOGGER.debug("Listing files in folder to find the resource:[{}]", pathUnderTest);
+        Collection<File> childFiles = FileUtils.listFiles(pathUnderTest, new String[]{extension}, true);
+        return childFiles.stream()
+            .filter(file -> file.getPath().contains(normalizedInput))
+            .findFirst()
+            .orElse(null);
     }
 
 }

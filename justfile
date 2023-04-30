@@ -81,8 +81,65 @@ help-example:
 
 # Runs with AsciiDoc output
 adoc-example:
-  java -Dapp.document.current-working-directory=docs/modules/ROOT/examples -jar jbang-catalog-document-generator-cli/target/jbang-catalog-document-generator-cli-999-SNAPSHOT.jar generate docs/modules/ROOT/examples/jbang-catalog.json -ch examples/custom-header.adoc -cf examples/custom-footer.adoc -o target/jbang-catalog.adoc --check-checksum=false -hfdr -pcn="personal-rodnan" -cus=true
+  java -Dapp.document.current-working-directory=docs/modules/ROOT/examples -Dquarkus.log.category.\"org.rodnansol\".level=DEBUG  \
+  -Dapp.document.alias-usage-folder-path=docs/modules/ROOT/examples/alias-usages \
+  -jar jbang-catalog-document-generator-cli/target/jbang-catalog-document-generator-cli-999-SNAPSHOT.jar \
+   generate docs/modules/ROOT/examples/jbang-catalog.json \
+   -ch custom-header.adoc -cf custom-footer.adoc -o target/jbang-catalog.adoc --check-checksum=false -hfdr -pcn="personal-rodnan" -cus=true
 
 # Runs with Markdown output
 md-example:
-  java -Dapp.document.current-working-directory=docs/modules/ROOT/examples -jar jbang-catalog-document-generator-cli/target/jbang-catalog-document-generator-cli-999-SNAPSHOT.jar generate -tt MD docs/modules/ROOT/examples/jbang-catalog.json -ch examples/custom-header.md -cf examples/custom-footer.md -o target/jbang-catalog.md --check-checksum=false -pcn="personal-rodnan" -cus=true -toc=true
+  java -Dapp.document.current-working-directory=docs/modules/ROOT/examples -Dquarkus.log.category.\"org.rodnansol\".level=DEBUG  \
+  -jar jbang-catalog-document-generator-cli/target/jbang-catalog-document-generator-cli-999-SNAPSHOT.jar \
+   generate -tt MD docs/modules/ROOT/examples/jbang-catalog.json -ch custom-header.md -cf custom-footer.md -o target/jbang-catalog.md --check-checksum=false -pcn="personal-rodnan" -cus=true -toc=true
+
+# Runs with AsciiDoc output
+adoc-native-example:
+  ./jbang-catalog-document-generator-cli/target/jbang-catalog-document-generator-cli-999-SNAPSHOT -Dapp.document.current-working-directory=docs/modules/ROOT/examples \
+   generate docs/modules/ROOT/examples/jbang-catalog.json \
+  -ch custom-header.adoc -cf custom-footer.adoc -o target/jbang-catalog.adoc --check-checksum=false -hfdr -pcn="personal-rodnan" -cus=true
+
+# Runs with Markdown output
+md-native-example:
+  ./jbang-catalog-document-generator-cli/target/jbang-catalog-document-generator-cli-999-SNAPSHOT -Dapp.document.current-working-directory=docs/modules/ROOT/examples \
+  generate docs/modules/ROOT/examples/jbang-catalog.json \
+  -tt MD -ch custom-header.md -cf custom-footer.md -o target/jbang-catalog.md --check-checksum=false -pcn="personal-rodnan" -cus=true -toc=true
+
+# Runs with AsciiDoc output
+adoc-native-docker-example:
+  docker run --user $(id -u):$(id -g) -v $(pwd):/project -it ghcr.io/rodnansol/jbang-catalog-document-generator:999-SNAPSHOT-native -Dapp.document.current-working-directory=/project/docs/modules/ROOT/examples \
+   generate /project/docs/modules/ROOT/examples/jbang-catalog.json \
+  -ch custom-header.adoc -cf custom-footer.adoc -o /project/target/jbang-catalog.adoc --check-checksum=false -hfdr -pcn="personal-rodnan" -cus=true
+
+# Runs with Markdown output
+md-native-docker-example:
+  docker run --user $(id -u):$(id -g) -v $(pwd):/project -it ghcr.io/rodnansol/jbang-catalog-document-generator:999-SNAPSHOT-native -Dapp.document.current-working-directory=/project/docs/modules/ROOT/examples \
+  generate /project/docs/modules/ROOT/examples/jbang-catalog.json \
+  -tt MD -ch custom-header.md -cf custom-footer.md -o /project/target/jbang-catalog.md --check-checksum=false -pcn="personal-rodnan" -cus=true -toc=true
+
+# Runs with AsciiDoc output
+adoc-custom-template-example:
+  java -Dapp.document.current-working-directory=docs/modules/ROOT/examples \
+  -jar jbang-catalog-document-generator-cli/target/jbang-catalog-document-generator-cli-999-SNAPSHOT.jar \
+  generate docs/modules/ROOT/examples/jbang-catalog.json \
+  -ch custom-header.adoc -cf custom-footer.adoc -o target/jbang-catalog.adoc --check-checksum=false -hfdr -pcn="personal-rodnan" -cus=true -t custom-template.adoc
+
+# Runs with Markdown output
+md-custom-template-example:
+  java -Dapp.document.current-working-directory=docs/modules/ROOT/examples \
+  -jar jbang-catalog-document-generator-cli/target/jbang-catalog-document-generator-cli-999-SNAPSHOT.jar \
+   generate -tt MD docs/modules/ROOT/examples/jbang-catalog.json \
+  -ch examples/custom-header.md -cf examples/custom-footer.md -o target/jbang-catalog.md --check-checksum=false -pcn="personal-rodnan" -cus=true -toc=true -t custom-template.md
+
+# Runs with AsciiDoc output
+adoc-custom-template-native-example:
+  ./jbang-catalog-document-generator-cli/target/jbang-catalog-document-generator-cli-999-SNAPSHOT -Dquarkus.log.category.\"org.rodnansol\".level=DEBUG \
+  -Dapp.document.current-working-directory=docs/modules/ROOT/examples \
+  generate docs/modules/ROOT/examples/jbang-catalog.json \
+  -ch custom-header.adoc -cf custom-footer.adoc -o target/jbang-catalog.adoc --check-checksum=false -hfdr -pcn="personal-rodnan" -cus=true -t custom-template.adoc
+
+# Runs with Markdown output
+md-custom-template-native-example:
+  ./jbang-catalog-document-generator-cli/target/jbang-catalog-document-generator-cli-999-SNAPSHOT -Dquarkus.log.category.\"org.rodnansol\".level=DEBUG -Dapp.document.current-working-directory=docs/modules/ROOT/examples \
+   generate -tt MD docs/modules/ROOT/examples/jbang-catalog.json \
+  -ch custom-header.md -cf custom-footer.md -o target/jbang-catalog.md --check-checksum=false -pcn="personal-rodnan" -cus=true -toc=true -t custom-template.md

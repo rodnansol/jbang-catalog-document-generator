@@ -26,6 +26,10 @@ class FileWriterService {
      */
     public void writeContentToFile(File outputFile, String content) throws IOException {
         LOGGER.debug("Writing content to output file:[{}]", outputFile);
+        if (!outputFile.getParentFile().exists()) {
+            LOGGER.warn("Parent file/folder:[{}] does not exists, creating it.", outputFile.getParentFile());
+            outputFile.getParentFile().mkdirs();
+        }
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(outputFile))) {
             writer.write(content);
         }
